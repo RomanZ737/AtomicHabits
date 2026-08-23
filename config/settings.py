@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+from celery.schedules import crontab
 
 
 load_dotenv()
@@ -38,17 +39,19 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'corsheaders',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -118,8 +121,28 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Celery
+    # URL-адрес брокера сообщений
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+    # URL-адрес брокера результатов, также Redis
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+    # Часовой пояс для работы Celery
+CELERY_TIMEZONE = "UTC"
+    # Флаг отслеживания выполнения задач
+CELERY_TASK_TRACK_STARTED = True
+    # Максимальное время на выполнение задачи
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BEAT_SCHEDULE = {
+    'check_active_users': {
+        'task': 'habits.tasks.habit_reminder',
+        'schedule': crontab(minute='*', hour='*'),
+    },
+}
+
+
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
+    'http://localhost:3000',
 ]
 
 # Настройки срока действия токенов
@@ -129,7 +152,7 @@ SIMPLE_JWT = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://read-and-write.example.com",
+    'http://localhost:3000',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
