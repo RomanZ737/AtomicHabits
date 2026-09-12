@@ -7,13 +7,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0001_initial'),
+        ("habits", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='habit',
-            name='connected_habit',
-            field=models.ForeignKey(blank=True, help_text='привычка, которую можно привязать к выполнению полезной привычки', null=True, on_delete=django.db.models.deletion.PROTECT, to='habits.habit', verbose_name='Habit Connected'),
+            model_name="habit",
+            name="connected_habit",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="привычка, которую можно привязать к выполнению полезной привычки",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="habits.habit",
+                verbose_name="Habit Connected",
+            ),
         ),
     ]

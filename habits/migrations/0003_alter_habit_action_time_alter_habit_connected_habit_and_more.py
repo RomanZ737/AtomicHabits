@@ -7,28 +7,45 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0002_alter_habit_connected_habit'),
+        ("habits", "0002_alter_habit_connected_habit"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='habit',
-            name='action_time',
-            field=models.DateTimeField(help_text='Время, когда необходимо выполнить привычку', verbose_name='Habit Action Time'),
+            model_name="habit",
+            name="action_time",
+            field=models.DateTimeField(
+                help_text="Время, когда необходимо выполнить привычку",
+                verbose_name="Habit Action Time",
+            ),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='connected_habit',
-            field=models.ForeignKey(blank=True, help_text='Привычка, которую можно привязать к выполнению полезной привычки', null=True, on_delete=django.db.models.deletion.PROTECT, to='habits.habit', verbose_name='Habit Connected'),
+            model_name="habit",
+            name="connected_habit",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Привычка, которую можно привязать к выполнению полезной привычки",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="habits.habit",
+                verbose_name="Habit Connected",
+            ),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='period',
-            field=models.IntegerField(default='daily', help_text='Периодичность выполнения привычки для напоминания в днях.', verbose_name='Habit Period'),
+            model_name="habit",
+            name="period",
+            field=models.IntegerField(
+                default="daily",
+                help_text="Периодичность выполнения привычки для напоминания в днях.",
+                verbose_name="Habit Period",
+            ),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='time_for_action',
-            field=models.IntegerField(help_text='Время на выполнение привычки', verbose_name='Habit Time For Action'),
+            model_name="habit",
+            name="time_for_action",
+            field=models.IntegerField(
+                help_text="Время на выполнение привычки",
+                verbose_name="Habit Time For Action",
+            ),
         ),
     ]

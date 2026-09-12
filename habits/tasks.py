@@ -3,36 +3,36 @@ from dotenv import load_dotenv
 import os
 import logging
 from celery import shared_task
-from users.models import CustomUser
 from django.utils import timezone
 from .models import Habit
-
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+
 @shared_task
 def send_telegram_message(chat_id, message):
     """Отправка сообщения в Телеграм"""
     try:
-        crewbot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
-        bot = telebot.TeleBot(crewbot_token, parse_mode='html')
+        crewbot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+        bot = telebot.TeleBot(crewbot_token, parse_mode="html")
         bot.send_message(chat_id=chat_id, text=message)
     except Exception as e:
         logger.error(f"Ошибка отправки сообщения пользователю {chat_id}: {e}")
+
 
 @shared_task
 def habit_reminder():
     """Проверяет привычки и отправляет напоминания."""
     now = timezone.localtime(timezone.now())
-    current_time = now.strftime('%H:%M')
+    # current_time = now.strftime("%H:%M")
 
     habits = Habit.objects.filter(
         is_pleasant_habit=False,
         action_time__hour=now.hour,
         action_time__minute=now.minute,
-    ).select_related('owner', 'connected_habit')
+    ).select_related("owner", "connected_habit")
 
     for habit in habits:
         user = habit.owner
@@ -64,4 +64,4 @@ def habit_reminder():
 
         # Обновляем дату последнего напоминания
         habit.last_reminder_date = now.date()
-        habit.save(update_fields=['last_reminder_date'])
+        habit.save(update_fields=["last_reminder_date"])
