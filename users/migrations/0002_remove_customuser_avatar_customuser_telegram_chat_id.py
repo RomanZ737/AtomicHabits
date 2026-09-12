@@ -6,17 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='customuser',
-            name='avatar',
+            model_name="customuser",
+            name="avatar",
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='telegram_chat_id',
-            field=models.CharField(blank=True, max_length=100, null=True, verbose_name='Telegram Chat ID'),
+            model_name="customuser",
+            name="telegram_chat_id",
+            field=models.CharField(
+                blank=True, max_length=100, null=True, verbose_name="Telegram Chat ID"
+            ),
         ),
     ]

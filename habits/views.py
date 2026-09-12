@@ -1,11 +1,7 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from habits.models import Habit
-from rest_framework import serializers
-
 from habits.paginators import HabitsPaginator
 from habits.serializers import HabitSerializer
-from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
 

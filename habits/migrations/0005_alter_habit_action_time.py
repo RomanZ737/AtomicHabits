@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0004_alter_habit_period'),
+        ("habits", "0004_alter_habit_period"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='habit',
-            name='action_time',
-            field=models.CharField(help_text='Время, когда необходимо выполнить привычку', verbose_name='Habit Action Time'),
+            model_name="habit",
+            name="action_time",
+            field=models.CharField(
+                help_text="Время, когда необходимо выполнить привычку",
+                verbose_name="Habit Action Time",
+            ),
         ),
     ]

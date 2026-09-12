@@ -7,28 +7,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0007_alter_habit_action_time'),
+        ("habits", "0007_alter_habit_action_time"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='habit',
-            name='last_reminder_date',
+            model_name="habit",
+            name="last_reminder_date",
             field=models.DateField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='bonus',
-            field=models.CharField(help_text='Вознаграждение за выполнение привычки', max_length=200, verbose_name='Habit Bonus'),
+            model_name="habit",
+            name="bonus",
+            field=models.CharField(
+                help_text="Вознаграждение за выполнение привычки",
+                max_length=200,
+                verbose_name="Habit Bonus",
+            ),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='connected_habit',
-            field=models.ForeignKey(blank=True, help_text='Привычка, которую можно привязать к выполнению полезной привычки', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='related_habit', to='habits.habit', verbose_name='Habit Connected'),
+            model_name="habit",
+            name="connected_habit",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Привычка, которую можно привязать к выполнению полезной привычки",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="related_habit",
+                to="habits.habit",
+                verbose_name="Habit Connected",
+            ),
         ),
         migrations.AlterField(
-            model_name='habit',
-            name='period',
-            field=models.IntegerField(default=1, help_text='Периодичность выполнения привычки для напоминания в днях.', verbose_name='Habit Period'),
+            model_name="habit",
+            name="period",
+            field=models.IntegerField(
+                default=1,
+                help_text="Периодичность выполнения привычки для напоминания в днях.",
+                verbose_name="Habit Period",
+            ),
         ),
     ]

@@ -8,14 +8,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0005_alter_habit_action_time'),
+        ("habits", "0005_alter_habit_action_time"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='habit',
-            name='owner',
-            field=models.ForeignKey(blank=True, help_text='Создатель привычки', null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Habit Owner'),
+            model_name="habit",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Создатель привычки",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Habit Owner",
+            ),
         ),
     ]

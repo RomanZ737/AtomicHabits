@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('habits', '0008_habit_last_reminder_date_alter_habit_bonus_and_more'),
+        ("habits", "0008_habit_last_reminder_date_alter_habit_bonus_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='habit',
-            name='bonus',
-            field=models.CharField(blank=True, help_text='Вознаграждение за выполнение привычки', max_length=200, null=True, verbose_name='Habit Bonus'),
+            model_name="habit",
+            name="bonus",
+            field=models.CharField(
+                blank=True,
+                help_text="Вознаграждение за выполнение привычки",
+                max_length=200,
+                null=True,
+                verbose_name="Habit Bonus",
+            ),
         ),
     ]
