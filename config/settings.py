@@ -73,19 +73,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-
-# Database
-# https://docs.djangoproject.com/en/6.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'PORT': os.environ.get('DATABASE_PORT'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT'),
     },
 }
 
@@ -122,15 +117,15 @@ REST_FRAMEWORK = {
 }
 
 # Celery
-    # URL-адрес брокера сообщений
+# URL-адрес брокера сообщений
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
-    # URL-адрес брокера результатов, также Redis
+# URL-адрес брокера результатов, также Redis
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
-    # Часовой пояс для работы Celery
+# Часовой пояс для работы Celery
 CELERY_TIMEZONE = "UTC"
-    # Флаг отслеживания выполнения задач
+# Флаг отслеживания выполнения задач
 CELERY_TASK_TRACK_STARTED = True
-    # Максимальное время на выполнение задачи
+# Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
