@@ -83,7 +83,7 @@ services:
         condition: service_started
 
   celery-beat:
-    image: ${DOCKER_HUB_USERNAME}/a_habitsa_habits:${DOCKER_IMAGE_TAG:-latest}
+    image: ${DOCKER_HUB_USERNAME}/a_habits:${DOCKER_IMAGE_TAG:-latest}
     restart: always
     command: celery -A config beat -l info
     env_file:
