@@ -11,7 +11,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
 
     def get_permissions(self):
-        if self.action in ('update', 'partial_update', 'destroy'):
+        if self.action in ("update", "partial_update", "destroy"):
             return [IsOwner()]
         return super().get_permissions()
 
