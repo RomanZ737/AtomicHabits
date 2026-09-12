@@ -4,16 +4,15 @@ on:
   push:
     branches: [main]
 
-
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
@@ -36,7 +35,6 @@ jobs:
           POSTGRES_DB: test_db
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
-          ALLOWED_HOSTS: localhost,127.0.0.1,testserver
         ports:
           - 5432:5432
         options: >-
@@ -64,22 +62,20 @@ jobs:
       POSTGRES_PASSWORD: test_password
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
       CELERY_BROKER_URL: redis://localhost:6379/0
       CELERY_RESULT_BACKEND: redis://localhost:6379/0
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
       - name: Cache pip
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -102,7 +98,7 @@ jobs:
     needs: test
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
@@ -123,7 +119,7 @@ jobs:
     needs: build
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -147,12 +143,9 @@ jobs:
             set -e
             cd ${{ secrets.DEPLOY_DIR }}
             echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/a_habits:${{ github.sha }}
             export DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}
             export DOCKER_IMAGE_TAG=${{ github.sha }}
-            docker compose down
-            docker compose up -d
-            docker compose exec -T web python manage.py migrate
-            docker compose exec -T web python manage.py collectstatic --noinput
+            docker compose pull
+            docker compose up -d --remove-orphans
             docker image prune -f
           EOF
